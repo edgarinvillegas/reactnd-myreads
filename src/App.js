@@ -4,11 +4,13 @@
  */
 import React from 'react';
 
+import MyLibrary from './components/MyLibrary';
+import * as BooksAPI from './BooksAPI';
+
 const BooksApp = () => {
+  //console.log(BooksAPI.getAll().then((response) => console.log(JSON.stringify(response))));
   return (
-    <div>
-      App
-    </div>
+    <MyLibrary />
   );
 };
 
