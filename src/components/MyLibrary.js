@@ -4,9 +4,9 @@ import BookList from './BookList';
 import './MyLibrary.css';
 import BookModel from '../model/Book';
 
-const MyLibrary = () => {
+const MyLibrary = ({ books }) => {
   //TODO: remove hardcoded data
-  let books = [
+  books = [
     {
       "title": "The Linux Command Line",
       "subtitle": "A Complete Introduction",
@@ -62,7 +62,7 @@ const MyLibrary = () => {
         "Mehul Bhatt"
       ],
       "publishedDate": "2016-12-30",
-      "description": "Build real-time responsive web apps using React and BootstrapAbout This BookModel* Showcase the power of React-Bootstrap through real-world examples* Explore the benefits of integrating React with various frameworks and APIs* See the benefits of using the latest frameworks to make your web development experience enchantingWho This BookModel Is ForThis book is for anybody who is interested in modern web development and has intermediate knowledge of HTML, CSS, and JavaScript. Basic knowledge of any JavaScript MVC framework would also be helpful.What You Will Learn* See how to integrate React-Bootstrap with React* Explore the Redux architecture and understand its benefits* Build a custom responsive theme* Easily interact with DOM on your web browser* Appreciate the advantages of using JSX* Get acquainted with the various routing methods in React* Integrate external APIs into ReactIn DetailReact-Bootstrap is one of the most popular front-end frameworks, and integrating it with React allows web developers to write much cleaner code. This book will help you gain a thorough understanding of the React-Bootstrap framework and show you how to build impressive web apps.In this book, you will get an overview of the features of React-Bootstrap and ReactJS, along with the integration of ReactJS components with ReactJS. You will understand the benefits of using JSX and the Redux architecture. The server-side rendering of React will also be shown. All the concepts are explained by developing real-world examples.By the end of this book, you will be equipped to create responsive web applications using React-Bootstrap with ReactJS, and will have an insight into the best practices.",
+      "description": "Build real-time responsive web apps using React and BootstrapAbout This Book* Showcase the power of React-Bootstrap through real-world examples* Explore the benefits of integrating React with various frameworks and APIs* See the benefits of using the latest frameworks to make your web development experience enchantingWho This Book Is ForThis book is for anybody who is interested in modern web development and has intermediate knowledge of HTML, CSS, and JavaScript. Basic knowledge of any JavaScript MVC framework would also be helpful.What You Will Learn* See how to integrate React-Bootstrap with React* Explore the Redux architecture and understand its benefits* Build a custom responsive theme* Easily interact with DOM on your web browser* Appreciate the advantages of using JSX* Get acquainted with the various routing methods in React* Integrate external APIs into ReactIn DetailReact-Bootstrap is one of the most popular front-end frameworks, and integrating it with React allows web developers to write much cleaner code. This book will help you gain a thorough understanding of the React-Bootstrap framework and show you how to build impressive web apps.In this book, you will get an overview of the features of React-Bootstrap and ReactJS, along with the integration of ReactJS components with ReactJS. You will understand the benefits of using JSX and the Redux architecture. The server-side rendering of React will also be shown. All the concepts are explained by developing real-world examples.By the end of this book, you will be equipped to create responsive web applications using React-Bootstrap with ReactJS, and will have an insight into the best practices.",
       "industryIdentifiers": [
         {
           "type": "ISBN_10",
@@ -329,6 +329,10 @@ const MyLibrary = () => {
   ];
   books = books.map( apiBook => new BookModel(apiBook) );
 
+  const currentlyReadingBooks = books.filter( book => book.shelf === 'currentlyReading' );
+  const wantToReadBooks = books.filter( book => book.shelf === 'wantToRead' );
+  const readBooks = books.filter( book => book.shelf === 'read' );
+
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -336,7 +340,9 @@ const MyLibrary = () => {
       </div>
       <div className="list-books-content">
         <div>
-          <BookList books={books} shelfTitle={'Currently Reading'} />
+          <BookList key={'currentlyReading'} books={currentlyReadingBooks} shelfTitle={'Currently Reading'} />
+          <BookList key={'wantToRead'} books={wantToReadBooks} shelfTitle={'Want to read'} />
+          <BookList key={'read'} books={readBooks} shelfTitle={'Read'} />
         </div>
       </div>
       <div className="open-search">
