@@ -12,7 +12,7 @@ const BookList = ({ shelfTitle = null, books }) => {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map( book => (
-            <li>
+            <li key={book.id}>
               <Book book={book}/>
             </li>
           ))}
@@ -24,7 +24,7 @@ const BookList = ({ shelfTitle = null, books }) => {
 
 BookList.propTypes = {
   shelfTitle: PropTypes.string,
-  books: PropTypes.array.isRequired   //TODO: Consider creating a class/type Book
+  books: PropTypes.arrayOf(Book.propTypes.book).isRequired
 };
 
 export default BookList;

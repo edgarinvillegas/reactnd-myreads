@@ -5,8 +5,8 @@ import './Book.css';
 
 const Book = ({ book, onShelfChange }) => {
 
-  const { title, authors = [], imageLinks: { smallThumbnail } = {}, shelf = 'none' } = book;
-  const backgroundImage = `url(${encodeURI(smallThumbnail)})`;
+  const { title, authors = [], thumbnailUrl = '', shelf = 'none' } = book;
+  const backgroundImage = `url(${encodeURI(thumbnailUrl)})`;
 
   return (
     <div className="book">
@@ -29,12 +29,11 @@ const Book = ({ book, onShelfChange }) => {
 };
 
 Book.propTypes = {
+  //book is a Book Model object
   book: PropTypes.shape({
     title: PropTypes.string.isRequired,
     authors: PropTypes.arrayOf(PropTypes.string),
-    imageLinks: PropTypes.shape({
-      smallThumbnail: PropTypes.string.isRequired
-    }),
+    thumbnailUrl: PropTypes.string,
     shelf: PropTypes.string
   }),
   onShelfChange: PropTypes.func //TODO: analyze if it's required
