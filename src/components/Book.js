@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Book.css';
 
-const Book = ({ book, onShelfChange }) => {
+const Book = ({ book, onShelfChange = () => {} }) => {
 
   const { title, authors = [], thumbnailUrl = '', shelf = 'none' } = book;
   const backgroundImage = `url(${encodeURI(thumbnailUrl)})`;
@@ -31,6 +31,11 @@ const Book = ({ book, onShelfChange }) => {
 Book.propTypes = {
   //book is a Book Model object
   book: PropTypes.shape({
+    /*
+     id is not used in this component, but given we reuse this propType outside, we're making it required.
+     I didn't find a cleaner way to do this applying DRY.
+     */
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     authors: PropTypes.arrayOf(PropTypes.string),
     thumbnailUrl: PropTypes.string,

@@ -1,14 +1,20 @@
+/**
+ * BookList component
+ * This renders a list of books with an optional title
+ * It can be used for shelves or search.
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Book from './Book';
+import Book from './Book'; //Importing this just because of its propTypes
 import './BookList.css';
 
-const BookList = ({ shelfTitle = null, books }) => {
+const BookList = ({ shelfTitle: title = null, books }) => {
 
   return (
     <div className="bookshelf">
-      {shelfTitle && <h2 className="bookshelf-title">{shelfTitle}</h2>}
+      {title && <h2 className="bookshelf-title">{title}</h2>}
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map( book => (
