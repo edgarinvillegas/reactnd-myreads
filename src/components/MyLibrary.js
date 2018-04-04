@@ -6,7 +6,7 @@ import Book from './Book';
 import './MyLibrary.css';
 
 
-const MyLibrary = ({ books }) => {
+const MyLibrary = ({ books, onShelfChange }) => {
 
   const currentlyReadingBooks = books.filter( book => book.shelf === 'currentlyReading' );
   const wantToReadBooks = books.filter( book => book.shelf === 'wantToRead' );
@@ -19,9 +19,9 @@ const MyLibrary = ({ books }) => {
       </div>
       <div className="list-books-content">
         <div>
-          <BookList key={'currentlyReading'} books={currentlyReadingBooks} shelfTitle={'Currently Reading'} />
-          <BookList key={'wantToRead'} books={wantToReadBooks} shelfTitle={'Want to read'} />
-          <BookList key={'read'} books={readBooks} shelfTitle={'Read'} />
+          <BookList key={'currentlyReading'} books={currentlyReadingBooks} shelfTitle={'Currently Reading'} onShelfChange={onShelfChange} />
+          <BookList key={'wantToRead'} books={wantToReadBooks} shelfTitle={'Want to read'} onShelfChange={onShelfChange} />
+          <BookList key={'read'} books={readBooks} shelfTitle={'Read'} onShelfChange={onShelfChange} />
         </div>
       </div>
       <div className="open-search">

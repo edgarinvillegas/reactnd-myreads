@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import Book from './Book'; //Importing this just because of its propTypes
 import './BookList.css';
 
-const BookList = ({ shelfTitle: title = null, books }) => {
+const BookList = ({ shelfTitle: title = null, books, onShelfChange }) => {
 
   return (
     <div className="bookshelf">
@@ -19,7 +19,7 @@ const BookList = ({ shelfTitle: title = null, books }) => {
         <ol className="books-grid">
           {books.map( book => (
             <li key={book.id}>
-              <Book book={book}/>
+              <Book book={book} onShelfChange={onShelfChange}/>
             </li>
           ))}
         </ol>

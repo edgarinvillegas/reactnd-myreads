@@ -4,18 +4,35 @@
  */
 import React, { Component } from 'react';
 
+//import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
 import MyLibrary from './components/MyLibrary';
 
+//TODO: Move to utility module
+const cloneArray = (array) => {
+  return JSON.parse(JSON.stringify(array));
+};
 
 class BooksApp extends Component {
-  //console.log(BooksAPI.getAll().then((response) => console.log(JSON.stringify(response))));
-
   state = {
     books: []
   };
 
+  onShelfChange = (book, newShelf) => {
+    this.setState((currState) => {
+      const newBooks = cloneArray(currState.books);
+      const newBook = newBooks.find( b => b.id === book.id );
+      newBook.shelf = newShelf;
+      return {
+        books: newBooks
+      };
+    });
+  };
+
+
+  //TODO: perform actual ajax call
   componentDidMount() {
+    //console.log(BooksAPI.getAll().then((response) => console.log(JSON.stringify(response))));
     const apiBooks = [
       {
         "title": "The Linux Command Line",
@@ -346,7 +363,7 @@ class BooksApp extends Component {
 
   render() {
     return (
-      <MyLibrary books={this.state.books} />
+      <MyLibrary books={this.state.books} onShelfChange={this.onShelfChange} />
     );
   }
 }

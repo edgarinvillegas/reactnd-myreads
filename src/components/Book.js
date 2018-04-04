@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 
 import './Book.css';
 
-const Book = ({ book, onShelfChange = () => {} }) => {
+const Book = ({ book, onShelfChange }) => {
 
   const { title, authors = [], thumbnailUrl = '', shelf = 'none' } = book;
   const backgroundImage = `url(${encodeURI(thumbnailUrl)})`;
+  const handleShelfSelect = (event) => {
+    const newShelf = event.target.value;
+    onShelfChange(book, newShelf);
+  };
 
   return (
     <div className="book">
       <div className="book-top">
         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: backgroundImage }} />
         <div className="book-shelf-changer">
-          <select value={shelf} onChange={onShelfChange}>
+          <select value={shelf} onChange={handleShelfSelect}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -41,7 +45,7 @@ Book.propTypes = {
     thumbnailUrl: PropTypes.string,
     shelf: PropTypes.string
   }),
-  onShelfChange: PropTypes.func //TODO: analyze if it's required
+  onShelfChange: PropTypes.func.isRequired
 };
 
 export default Book;
