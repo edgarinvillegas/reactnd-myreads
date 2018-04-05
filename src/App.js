@@ -3,6 +3,7 @@
  * @author evillegas (edgarinvillegas@hotmail.com)
  */
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
@@ -51,7 +52,16 @@ class BooksApp extends Component {
 
   render() {
     return (
-      <MyLibrary books={this.state.books} onShelfChange={this.onShelfChange} />
+      <div>
+        <Route exact path={'/'} render={() => (
+          <MyLibrary books={this.state.books} onShelfChange={this.onShelfChange} />
+        )}
+        />
+        <Route path={'/search'} render={() => (
+          <h1>Search page</h1>
+        )}
+        />
+      </div>
     );
   }
 }
