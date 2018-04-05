@@ -19,10 +19,17 @@ class BooksApp extends Component {
   };
 
   onShelfChange = (book, newShelf) => {
+    //Makes the ajax call. If there was an error, rollbacks to previous state. TODO: Consider simultaneous failure
+    const persistUpdate = (previousState) => {
+      BooksAPI.update(book, newShelf).catch(() => {
+        this.setState(previousState);
+      });
+    };
     this.setState((currState) => {
       const newBooks = cloneArray(currState.books);
       const newBook = newBooks.find( b => b.id === book.id );
       newBook && (newBook.shelf = newShelf);
+      persistUpdate(currState);
       return {
         books: newBooks
       };
