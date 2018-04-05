@@ -15,6 +15,11 @@
     text-align: center;
 }
 
+.bookshelf-no-books {
+    font-style: italic;
+    font-size: 20px;
+}
+
 /* books grid */
 
 .books-grid {

@@ -33,7 +33,7 @@ class Book {
       id: apiBook.id,
       title: apiBook.title,
       authors: apiBook.authors,
-      thumbnailUrl: apiBook.imageLinks.smallThumbnail,
+      thumbnailUrl: apiBook.imageLinks ? apiBook.imageLinks.smallThumbnail : '',
       shelf: apiBook.shelf
     });
   }
