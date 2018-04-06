@@ -16,7 +16,7 @@ class Search extends Component {
   getFinalBookList = (filteredBooks, myBooks) => {
     return filteredBooks.map(filteredBook => {
       let myBook = myBooks.find( myBook => myBook.id === filteredBook.id );
-      return myBook ? { ...filteredBook, shelf: myBook.shelf } : filteredBook;
+      return myBook ? new BookModel({ ...filteredBook, shelf: myBook.shelf }) : filteredBook;
     });
   };
 

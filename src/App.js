@@ -10,10 +10,7 @@ import BookModel from './model/Book';
 import MyLibrary from './components/MyLibrary';
 import Search from './components/Search';
 
-//TODO: Move to utility module
-const cloneArray = (array) => {
-  return JSON.parse(JSON.stringify(array));
-};
+
 
 class BooksApp extends Component {
   state = {
@@ -21,20 +18,18 @@ class BooksApp extends Component {
   };
 
   onShelfChange = (book, newShelf) => {
-    console.log('onShelfChange', book, newShelf);
     //Makes the ajax call. If there was an error, rollbacks to previous state. TODO: Consider simultaneous failure
-    const persistUpdate = (previousState) => {
+    const persistShelfUpdate = (previousState) => {
       BooksAPI.update(book, newShelf).catch(() => {
         this.setState(previousState);
       });
     };
     this.setState((currState) => {
-      const newBooks = cloneArray(currState.myBooks);
-      const newBook = newBooks.find( b => b.id === book.id );
-      newBook && (newBook.shelf = newShelf);
-      persistUpdate(currState);
+      persistShelfUpdate(currState);
       return {
-        myBooks: newBooks
+        myBooks: currState.myBooks.map( b => {
+          return b.id !== book.id ? b : new BookModel({ ...b, shelf: newShelf })
+        })
       };
     });
   };

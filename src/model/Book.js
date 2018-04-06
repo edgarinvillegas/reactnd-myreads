@@ -28,8 +28,16 @@ class Book {
   thumbnailUrl = '';
   shelf = '';
 
-  constructor(apiBook) {
-    apiBook && Object.assign(this, {
+  constructor(book) {
+    if (book.imageLinks) {
+      this._constructFromApiBook(book);
+    } else {
+      this._constructFromBookLike(book);
+    }
+  }
+
+  _constructFromApiBook(apiBook) {
+    Object.assign(this, {
       id: apiBook.id,
       title: apiBook.title,
       authors: apiBook.authors,
@@ -37,6 +45,11 @@ class Book {
       shelf: apiBook.shelf || 'none'
     });
   }
+
+  _constructFromBookLike(book) {
+    Object.assign(this, book);
+  }
+
 }
 
 export default Book;
