@@ -8,6 +8,7 @@ import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
 import MyLibrary from './components/MyLibrary';
+import Search from './components/Search';
 
 //TODO: Move to utility module
 const cloneArray = (array) => {
@@ -16,10 +17,11 @@ const cloneArray = (array) => {
 
 class BooksApp extends Component {
   state = {
-    books: []
+    myBooks: []
   };
 
   onShelfChange = (book, newShelf) => {
+    console.log('onShelfChange', book, newShelf);
     //Makes the ajax call. If there was an error, rollbacks to previous state. TODO: Consider simultaneous failure
     const persistUpdate = (previousState) => {
       BooksAPI.update(book, newShelf).catch(() => {
@@ -27,12 +29,12 @@ class BooksApp extends Component {
       });
     };
     this.setState((currState) => {
-      const newBooks = cloneArray(currState.books);
+      const newBooks = cloneArray(currState.myBooks);
       const newBook = newBooks.find( b => b.id === book.id );
       newBook && (newBook.shelf = newShelf);
       persistUpdate(currState);
       return {
-        books: newBooks
+        myBooks: newBooks
       };
     });
   };
@@ -40,13 +42,14 @@ class BooksApp extends Component {
 
   onGetBooksSuccess = (apiBooks) => {
     this.setState( () => ({
-      books: apiBooks.map( apiBook => new BookModel(apiBook))
+      myBooks: apiBooks.map(apiBook => new BookModel(apiBook))
     }));
   };
 
   componentDidMount() {
     BooksAPI.getAll()
       .then(this.onGetBooksSuccess)
+      .catch((err) => { console.log("ERROR IN BooksAPI.getAll(): ", err); } )
     ;
   }
 
@@ -54,11 +57,11 @@ class BooksApp extends Component {
     return (
       <div>
         <Route exact path={'/'} render={() => (
-          <MyLibrary books={this.state.books} onShelfChange={this.onShelfChange} />
+          <MyLibrary books={this.state.myBooks} onShelfChange={this.onShelfChange} />
         )}
         />
         <Route path={'/search'} render={() => (
-          <h1>Search page</h1>
+          <Search myBooks={this.state.myBooks} onShelfChange={this.onShelfChange} />
         )}
         />
       </div>

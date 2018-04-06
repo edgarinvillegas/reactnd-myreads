@@ -34,7 +34,7 @@ class Book {
       title: apiBook.title,
       authors: apiBook.authors,
       thumbnailUrl: apiBook.imageLinks ? apiBook.imageLinks.smallThumbnail : '',
-      shelf: apiBook.shelf
+      shelf: apiBook.shelf || 'none'
     });
   }
 }
