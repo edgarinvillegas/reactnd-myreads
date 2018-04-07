@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import debounce from 'lodash.debounce';
 
 import './Search.css';
 import BookList from "./BookList";
 import BookModel from '../model/Book';
 import * as BooksAPI from '../BooksAPI';
+
 
 class Search extends Component {
 
@@ -12,6 +14,11 @@ class Search extends Component {
     query: '',
     filteredBooks: []
   };
+
+  constructor(props) {
+    super(props);
+    this.doSearch = debounce(this.doSearch, 2000); //To prevent making ajax calls too frequently.
+  }
 
   getFinalBookList = (filteredBooks, myBooks) => {
     return filteredBooks.map(filteredBook => {
