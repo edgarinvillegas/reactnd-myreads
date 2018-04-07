@@ -26,10 +26,15 @@ class BooksApp extends Component {
     };
     this.setState((currState) => {
       persistShelfUpdate(currState);
-      return {
-        myBooks: currState.myBooks.map( b => {
+      const isNewBook = currState.myBooks.find( b => b.id === book.id ) === undefined;
+      const myBooks = currState.myBooks
+        .concat(isNewBook ? [book] : [] ) //If the book isn't in any shelf, we add it
+        .map( b => {
           return b.id !== book.id ? b : new BookModel({ ...b, shelf: newShelf })
         })
+      ;
+      return {
+        myBooks: myBooks
       };
     });
   };
