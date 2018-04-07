@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Book from './Book'; //Importing this just because of its propTypes
 import './BookList.css';
@@ -17,13 +18,19 @@ const BookList = ({ shelfTitle: title = null, books, onShelfChange }) => {
       <div className="bookshelf-books">
         {books.length === 0 && <div className="bookshelf-no-books"> No books </div>}
         {books.length > 0 && (
-          <ol className="books-grid">
+          <TransitionGroup className="books-grid" component={'ol'}>
             {books.map( book => (
-              <li key={book.id}>
-                <Book book={book} onShelfChange={onShelfChange}/>
-              </li>
+              <CSSTransition
+                key={book.id}
+                timeout={500}
+                classNames="fade"
+              >
+                <li>
+                  <Book book={book} onShelfChange={onShelfChange}/>
+                </li>
+              </CSSTransition>
             ))}
-          </ol>
+          </TransitionGroup>
         )}
       </div>
     );

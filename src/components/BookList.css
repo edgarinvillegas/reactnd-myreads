@@ -36,3 +36,18 @@
     text-align: left;
 }
 
+.books-grid li.fade-enter {
+    opacity: 0.01;
+}
+.books-grid li.fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+.books-grid li.fade-exit {
+    opacity: 1;
+}
+.books-grid li.fade-exit-active {
+    opacity: 0.01;
+    transition: opacity 500ms ease-in;
+}
+

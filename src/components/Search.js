@@ -30,10 +30,8 @@ class Search extends Component {
     console.log(`Searching with ${query.trim()}`);
     BooksAPI.search(query.trim())
       .then( response => {
-        if(response.error) {
-          throw new Error(response.error);
-        }
-        this.onSearchSuccess(response);
+        const apiFilteredBooks = response.error ? [] : response;
+        this.onSearchSuccess(apiFilteredBooks);
       })
       .catch( err => {
         console.log(`Error ${err.toString()}`);
