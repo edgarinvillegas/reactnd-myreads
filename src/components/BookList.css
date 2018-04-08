@@ -36,18 +36,24 @@
     text-align: left;
 }
 
+/* Animation */
 .books-grid li.fade-enter {
     opacity: 0.01;
+    transform: scaleX(0.01);
 }
 .books-grid li.fade-enter-active {
     opacity: 1;
-    transition: opacity 500ms ease-in;
+    transform: scaleX(1);
+    transition: all 500ms ease-in;
 }
 .books-grid li.fade-exit {
     opacity: 1;
+    transform: scaleX(1);
 }
 .books-grid li.fade-exit-active {
     opacity: 0.01;
-    transition: opacity 500ms ease-in;
+    transform: scaleX(0.01);
+    transition: all 500ms ease-in;
 }
+
 
