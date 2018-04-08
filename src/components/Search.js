@@ -23,7 +23,14 @@ class Search extends Component {
     /**
      * @state {BookModel[]}
      */
-    filteredBooks: []
+    filteredBooks: [],
+    /**
+     * Tracks the number of pending search ajax calls. Useful for show loading states
+     * @state {Number}
+     */
+    pendingSearchCalls: 0,
+
+    searching: false
   };
 
   constructor(props) {
@@ -58,13 +65,17 @@ class Search extends Component {
    * @param {string} query
    */
   doSearch = (query) => {
+    this.setState(currState => ({ pendingSearchCalls: currState.pendingSearchCalls + 1 }));
     BooksAPI.search(query.trim())
       .then( response => {
         const apiFilteredBooks = response.error ? [] : response; //To handle 'Empty query' error
         this.onSearchSuccess(apiFilteredBooks);
       })
       .catch( err => {
-        console.log(`Error ${err.toString()}`);
+        console.log(`Error ${err.toString()}`); //TODO: show as toast
+      })
+      .then(() => { //finally
+        this.setState(currState => ({ pendingSearchCalls: currState.pendingSearchCalls - 1 }));
       })
     ;
   };
@@ -84,7 +95,7 @@ class Search extends Component {
   };
 
   render() {
-    const { filteredBooks, query } = this.state;
+    const { filteredBooks, query, pendingSearchCalls } = this.state;
     const { onShelfChange, myBooks } = this.props;
 
     return (
@@ -99,7 +110,11 @@ class Search extends Component {
           <BookList
             books={this.getFinalBookList(filteredBooks, myBooks)}
             onShelfChange={onShelfChange}
-            noBooksText={() => query.trim() === '' ? 'Type above to search' : 'No books found'}
+            noBooksText={() => (
+              query.trim() === '' ? 'Type above to search' :
+              pendingSearchCalls > 0 ? 'Searching...' :
+              'No books found'
+            )}
           />
         </div>
       </div>
