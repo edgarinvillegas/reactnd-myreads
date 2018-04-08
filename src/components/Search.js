@@ -96,7 +96,11 @@ class Search extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <BookList books={this.getFinalBookList(filteredBooks, myBooks)} onShelfChange={onShelfChange}/>
+          <BookList
+            books={this.getFinalBookList(filteredBooks, myBooks)}
+            onShelfChange={onShelfChange}
+            noBooksText={() => query.trim() === '' ? 'Type above to search' : 'No books found'}
+          />
         </div>
       </div>
     )
