@@ -11,12 +11,12 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Book from './Book'; //Importing this just for its propTypes
 import './BookList.css';
 
-const BookList = ({ shelfTitle: title = null, books, onShelfChange, noBooksText = () => 'No books' }) => {
+const BookList = ({ shelfTitle: title = null, books, onShelfChange, noBooksText = 'No books' }) => {
 
   const renderBody = () => {
     return (
       <div className="bookshelf-books">
-        {books.length === 0 && <div className="bookshelf-no-books"> {noBooksText()} </div>}
+        {books.length === 0 && <div className="bookshelf-no-books"> {noBooksText} </div>}
         {books.length > 0 && (
           <TransitionGroup className="books-grid" component={'ol'}>
             {books.map( book => (
@@ -49,7 +49,7 @@ BookList.propTypes = {
   shelfTitle: PropTypes.string,
   books: PropTypes.arrayOf(Book.propTypes.book).isRequired,
   onShelfChange: PropTypes.func.isRequired,
-  noBooksText: PropTypes.func
+  noBooksText: PropTypes.string
 };
 
 export default BookList;

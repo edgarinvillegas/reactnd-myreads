@@ -17,13 +17,26 @@ class BooksApp extends Component {
     /**
      * @state {BookModel[]} All the books in "My shelves"
      */
-    myBooks: []
+    myBooks: [],
+    /**
+     * @state {boolean} Indicates if the getBooks call is being made
+     */
+    loading: false
+  };
+
+
+  getMyBooks = () => {
+
   };
 
   componentDidMount() {
+    this.setState(currState => ({ loading: true }));
     BooksAPI.getAll()
       .then(this.onGetBooksSuccess)
-      .catch((err) => { console.log("ERROR IN BooksAPI.getAll(): ", err); } )
+      .catch((err) => { console.log("ERROR IN BooksAPI.getAll(): ", err); })
+      .then( () => { //Finally
+        this.setState(currState => ({ loading: false }));
+      })
     ;
   }
 
@@ -79,15 +92,16 @@ class BooksApp extends Component {
   };
 
   render() {
+    const { myBooks, loading } = this.state;
     return (
       <div>
         <Notification.Container />
         <Route exact path={'/'} render={() => (
-          <MyLibrary books={this.state.myBooks} onShelfChange={this.onShelfChange} />
+          <MyLibrary books={myBooks} onShelfChange={this.onShelfChange} loading={loading} />
         )}
         />
         <Route path={'/search'} render={() => (
-          <Search myBooks={this.state.myBooks} onShelfChange={this.onShelfChange} />
+          <Search myBooks={myBooks} onShelfChange={this.onShelfChange} />
         )}
         />
       </div>

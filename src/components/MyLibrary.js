@@ -10,11 +10,12 @@ import './MyLibrary.css';
 import {Link} from "react-router-dom";
 
 
-const MyLibrary = ({ books, onShelfChange }) => {
+const MyLibrary = ({ books, onShelfChange, loading = false }) => {
 
   const currentlyReadingBooks = books.filter( book => book.shelf === 'currentlyReading' );
   const wantToReadBooks = books.filter( book => book.shelf === 'wantToRead' );
   const readBooks = books.filter( book => book.shelf === 'read' );
+  const noBooksText = loading ? 'Loading...' : 'No books in this shelf'
 
   return (
     <div className="list-books">
@@ -28,18 +29,21 @@ const MyLibrary = ({ books, onShelfChange }) => {
             books={currentlyReadingBooks}
             shelfTitle={'Currently Reading'}
             onShelfChange={onShelfChange}
+            noBooksText={noBooksText}
           />
           <BookList
             key={'wantToRead'}
             books={wantToReadBooks}
             shelfTitle={'Want to read'}
             onShelfChange={onShelfChange}
+            noBooksText={noBooksText}
           />
           <BookList
             key={'read'}
             books={readBooks}
             shelfTitle={'Read'}
             onShelfChange={onShelfChange}
+            noBooksText={noBooksText}
           />
         </div>
       </div>
@@ -52,7 +56,8 @@ const MyLibrary = ({ books, onShelfChange }) => {
 
 MyLibrary.propTypes = {
   books: PropTypes.arrayOf(Book.propTypes.book).isRequired,
-  onShelfChange: PropTypes.func.isRequired
+  onShelfChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool
 };
 
 export default MyLibrary;

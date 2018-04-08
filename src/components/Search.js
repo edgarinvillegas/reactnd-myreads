@@ -110,7 +110,7 @@ class Search extends Component {
           <BookList
             books={this.getFinalBookList(filteredBooks, myBooks)}
             onShelfChange={onShelfChange}
-            noBooksText={() => (
+            noBooksText={(
               query.trim() === '' ? 'Type above to search' :
               pendingSearchCalls > 0 ? 'Searching...' :
               'No books found'
