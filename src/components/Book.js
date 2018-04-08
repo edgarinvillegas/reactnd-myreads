@@ -16,7 +16,7 @@ class Book extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const book = this.props.book;
     const newBook = nextProps.book;
-    return book.id !== newBook.id || book.shelf !== newBook.shelf;
+    return !book.equals(newBook);
   }
 
   render() {

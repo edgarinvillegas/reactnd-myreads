@@ -44,6 +44,20 @@ class Book {
 
   /**
    *
+   * @param {Book} book
+   */
+  equals(book) {
+    return (
+      this.id === book.id &&
+      this.title === book.title &&
+      this.thumbnailUrl === book.thumbnailUrl &&
+      this.shelf === book.shelf &&
+      JSON.stringify(this.authors) === JSON.stringify(book.authors)
+    );
+  }
+
+  /**
+   *
    * @param {Object} book Can be a Book-like object OR an object literal in the format returned by BooksApi
    */
   constructor(book) {
