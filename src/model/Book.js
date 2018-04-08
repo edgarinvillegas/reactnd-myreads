@@ -2,7 +2,8 @@
  * POJO that represents a Book
  * It's a subset of what we receive from BooksAPI, with only the fields we need.
  * Usage:
- * const apiBook = {
+ * --- To create an instance from BooksAPI book: ---
+ const apiBook = {
     "title": "The Linux Command Line",
     "authors": [
       "William E. Shotts, Jr."
@@ -19,6 +20,19 @@
     ...
   }
   const book = new Book(apiBook);
+
+ * --- To create an instance from a Book or Book-like: ---
+  //From Book literal
+  const book = new Book({
+    id: '123',
+    title: 'Learning React',
+    authors: ['Tyler'],
+    thumbnailUrl: '',
+    shelf = ''
+  });
+
+  //From Book instance
+  const bookClone = new Book(book);
  */
 
 class Book {
@@ -28,8 +42,12 @@ class Book {
   thumbnailUrl = '';
   shelf = '';
 
+  /**
+   *
+   * @param {Object} book Can be a Book-like object OR an object literal in the format returned by BooksApi
+   */
   constructor(book) {
-    if (book.imageLinks) {
+    if (book.publisher) { //This helps distinguish an api-book from a Book one.
       this._constructFromApiBook(book);
     } else {
       this._constructFromBookLike(book);

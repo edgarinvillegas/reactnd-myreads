@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import Book from './Book'; //Importing this just because of its propTypes
+import Book from './Book'; //Importing this just for its propTypes
 import './BookList.css';
 
 const BookList = ({ shelfTitle: title = null, books, onShelfChange }) => {
@@ -47,7 +47,8 @@ const BookList = ({ shelfTitle: title = null, books, onShelfChange }) => {
 
 BookList.propTypes = {
   shelfTitle: PropTypes.string,
-  books: PropTypes.arrayOf(Book.propTypes.book).isRequired
+  books: PropTypes.arrayOf(Book.propTypes.book).isRequired,
+  onShelfChange: PropTypes.func.isRequired
 };
 
 export default BookList;

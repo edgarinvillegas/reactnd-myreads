@@ -1,3 +1,6 @@
+/**
+ * Main component for the Search screen
+ */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import debounce from 'lodash.debounce';
@@ -6,12 +9,20 @@ import './Search.css';
 import BookList from "./BookList";
 import BookModel from '../model/Book';
 import * as BooksAPI from '../BooksAPI';
+import Book from "./Book";
+import PropTypes from "prop-types";
 
 
 class Search extends Component {
 
   state = {
+    /**
+     * @state {string}
+     */
     query: '',
+    /**
+     * @state {BookModel[]}
+     */
     filteredBooks: []
   };
 
@@ -20,6 +31,12 @@ class Search extends Component {
     this.doSearch = debounce(this.doSearch, 2000); //To prevent making ajax calls too frequently.
   }
 
+  /**
+   * Returns the merge between the books returned from search (filteredBooks) and the books from 'my shelves' (myBooks)
+   * @param {BookModel[]} filteredBooks
+   * @param {BookModel[]} myBooks
+   * @return {BookModel[]}
+   */
   getFinalBookList = (filteredBooks, myBooks) => {
     return filteredBooks.map(filteredBook => {
       let myBook = myBooks.find( myBook => myBook.id === filteredBook.id );
@@ -27,17 +44,23 @@ class Search extends Component {
     });
   };
 
+  /**
+   * @param {Object[]} apiFilteredBooks List of books in the format returned by search api
+   */
   onSearchSuccess = (apiFilteredBooks) => {
     this.setState(() => ({
       filteredBooks: apiFilteredBooks.map( apiFilteredBook => new BookModel(apiFilteredBook))
     }));
   };
 
+  /**
+   * Makes the search api call
+   * @param {string} query
+   */
   doSearch = (query) => {
-    console.log(`Searching with ${query.trim()}`);
     BooksAPI.search(query.trim())
       .then( response => {
-        const apiFilteredBooks = response.error ? [] : response;
+        const apiFilteredBooks = response.error ? [] : response; //To handle 'Empty query' error
         this.onSearchSuccess(apiFilteredBooks);
       })
       .catch( err => {
@@ -79,5 +102,10 @@ class Search extends Component {
     )
   }
 }
+
+Search.propTypes = {
+  myBooks: PropTypes.arrayOf(Book.propTypes.book).isRequired,
+  onShelfChange: PropTypes.func.isRequired
+};
 
 export default Search;

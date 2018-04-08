@@ -33,7 +33,7 @@ const Book = ({ book, onShelfChange }) => {
 };
 
 Book.propTypes = {
-  //book is a Book Model object
+  //book is a Book Model object.
   book: PropTypes.shape({
     /*
      id is not used in this component, but given we reuse this propType outside, we're making it required.
