@@ -4,12 +4,12 @@
  */
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 
 import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
 import MyLibrary from './components/MyLibrary';
 import Search from './components/Search';
+import * as Notification from './util/Notification';
 
 
 class BooksApp extends Component {
@@ -36,12 +36,6 @@ class BooksApp extends Component {
     }));
   };
 
-  notify = (text) => {
-    toast(text, {
-      position: toast.POSITION.BOTTOM_RIGHT
-    });
-  };
-
   /**
    * Changes a book to a new shelf. Handles both in-memory and backend changes.
    * @param {BookModel} book
@@ -56,7 +50,7 @@ class BooksApp extends Component {
       });
     };
 
-    this.notify(`Moved "${book.title}" to ${newShelf} shelf`);
+    Notification.show(`Moved "${book.title}" to ${newShelf} shelf`);
 
     this.setState((currState) => {
       persistShelfUpdate(currState);
@@ -87,7 +81,7 @@ class BooksApp extends Component {
   render() {
     return (
       <div>
-        <ToastContainer />
+        <Notification.Container />
         <Route exact path={'/'} render={() => (
           <MyLibrary books={this.state.myBooks} onShelfChange={this.onShelfChange} />
         )}
