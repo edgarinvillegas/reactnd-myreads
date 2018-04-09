@@ -2,11 +2,11 @@
  * Wrapper for react-toastify
  * Usage:
  *
- * import * as Notification from './Notification';
+ * import { notify,  NotificationContainer } from './notification';
  *
- * <Notification.Container />  //-> Must exist somewhere in the component tree
+ * <NotificationContainer />  //-> Must exist somewhere in the component tree
  *
- * Notification.show('This is a message that appears bottom right on the screen');
+ * notify('This is a message that appears bottom right on the screen');
  */
 
 import { ToastContainer, toast, style } from 'react-toastify';
