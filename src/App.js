@@ -28,7 +28,7 @@ class BooksApp extends Component {
     this.setState(() => ({ loading: true }));
     BooksAPI.getAll()
       .then(this.onGetBooksSuccess)
-      .catch((err) => { console.log("ERROR IN BooksAPI.getAll(): ", err); })
+      .catch((err) => { alert(`Error when fetching my books. Please refresh the page. \nError: ${err.message}`); })
       .then( () => { //Finally
         this.setState(() => ({ loading: false }));
       })
@@ -55,6 +55,7 @@ class BooksApp extends Component {
     const persistShelfUpdate = (previousState) => {
       BooksAPI.update(book, newShelf).catch(() => {
         this.setState(previousState);
+        notify(`Could not move "${book.title}" to "${Shelf.getLabel(newShelf)}" shelf`);
       });
     };
 
