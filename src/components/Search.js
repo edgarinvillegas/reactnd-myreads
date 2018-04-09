@@ -21,17 +21,23 @@ class Search extends Component {
      * @state {string}
      */
     query: '',
+
     /**
      * @state {BookModel[]}
      */
     filteredBooks: [],
+
     /**
-     * Tracks the number of pending search ajax calls. Useful for show loading states
+     * Tracks the number of pending search ajax calls. Useful to show 'Searching...' states
      * @state {Number}
      */
     pendingSearchCalls: 0,
 
-    searching: false
+    /**
+     * Cannot be calculated from pendingSearchCalls because ajax calls are debounced (see constructor).
+     * @state {boolean}
+     */
+    typing: false
   };
 
   constructor(props) {
@@ -66,7 +72,10 @@ class Search extends Component {
    * @param {string} query
    */
   doSearch = (query) => {
-    this.setState(currState => ({ pendingSearchCalls: currState.pendingSearchCalls + 1 }));
+    this.setState(currState => ({
+      pendingSearchCalls: currState.pendingSearchCalls + 1,
+      typing: false
+    }));
     BooksAPI.search(query.trim())
       .then( response => {
         const apiFilteredBooks = response.error ? [] : response; //To handle 'Empty query' error
@@ -83,20 +92,23 @@ class Search extends Component {
 
   handleSearchTextChange = (event) => {
     const query = event.target.value;
-    this.setState(() => ({
-      query: query
-    }));
     if(query.trim()){
+      this.setState(() => ({
+        query: query,
+        typing: true
+      }));
       this.doSearch(query);
     } else {
       this.setState(() => ({
+        query: query,
+        typing: false,
         filteredBooks: []
       }));
     }
   };
 
   render() {
-    const { filteredBooks, query, pendingSearchCalls } = this.state;
+    const { filteredBooks, query, pendingSearchCalls, typing } = this.state;
     const { onShelfChange, myBooks } = this.props;
 
     return (
@@ -112,9 +124,9 @@ class Search extends Component {
             books={this.getFinalBookList(filteredBooks, myBooks)}
             onShelfChange={onShelfChange}
             noBooksText={(
-              query.trim() === '' ? 'Type above to search' :
+              query.trim() === '' || typing ? 'Type above to search' :
               pendingSearchCalls > 0 ? 'Searching...' :
-              'No books found'
+              `No books found for "${query.trim()}" query`
             )}
           />
         </div>

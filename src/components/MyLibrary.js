@@ -16,7 +16,7 @@ const MyLibrary = ({ books, onShelfChange, loading = false }) => {
   const currentlyReadingBooks = books.filter( book => book.shelf === 'currentlyReading' );
   const wantToReadBooks = books.filter( book => book.shelf === 'wantToRead' );
   const readBooks = books.filter( book => book.shelf === 'read' );
-  const noBooksText = loading ? 'Loading...' : 'No books in this shelf'
+  const noBooksText = loading ? 'Loading...' : 'No books in this shelf';
 
   return (
     <div className="list-books">
