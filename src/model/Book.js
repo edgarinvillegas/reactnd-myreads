@@ -34,7 +34,7 @@
   //From Book instance
   const bookClone = new Book(book);
  */
-import ShelfEnum from './ShelfEnum';
+import { ShelfEnum } from './Shelf';
 
 class Book {
   id = '';

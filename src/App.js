@@ -9,9 +9,8 @@ import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
 import MyLibrary from './components/MyLibrary';
 import Search from './components/Search';
-import { notify, NotificationContainer} from './util/Notification';
-import ShelfEnum from "./model/ShelfEnum";
-
+import { notify, NotificationContainer} from './util/notification';
+import Shelf from "./model/Shelf";
 
 class BooksApp extends Component {
   state = {
@@ -59,7 +58,7 @@ class BooksApp extends Component {
       });
     };
 
-    notify(`Moved "${book.title}" to "${ShelfEnum.getLabel(newShelf)}" shelf`);
+    notify(`Moved "${book.title}" to "${Shelf.getLabel(newShelf)}" shelf`);
 
     this.setState((currState) => {
       persistShelfUpdate(currState);

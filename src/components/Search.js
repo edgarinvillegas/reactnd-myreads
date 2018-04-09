@@ -11,7 +11,7 @@ import BookList from "./BookList";
 import BookModel from '../model/Book';
 import * as BooksAPI from '../BooksAPI';
 import Book from "./Book";
-import { notify } from '../util/Notification';
+import { notify } from '../util/notification';
 
 
 class Search extends Component {

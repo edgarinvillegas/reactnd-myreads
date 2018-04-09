@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import './Book.css';
-import ShelfEnum from "../model/ShelfEnum";
+import { ShelfEnum } from "../model/Shelf";
 
 class Book extends Component {
   bookEl = null; //Reference only for animation
