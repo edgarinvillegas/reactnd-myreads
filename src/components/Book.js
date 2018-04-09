@@ -8,6 +8,7 @@ class Book extends Component {
   bookEl = null; //Reference only for animation
 
   componentDidUpdate() {
+    //When a book is updated, adds a fade-out + fade-in animation
     const bookEl = this.bookEl;
     bookEl.classList.remove('fade-out-in');
     requestAnimationFrame(() => bookEl && bookEl.classList.add('fade-out-in'));
