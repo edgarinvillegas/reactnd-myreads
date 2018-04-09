@@ -9,7 +9,8 @@ import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
 import MyLibrary from './components/MyLibrary';
 import Search from './components/Search';
-import * as Notification from './util/Notification';
+import { notify, NotificationContainer} from './util/Notification';
+import ShelfEnum from "./model/ShelfEnum";
 
 
 class BooksApp extends Component {
@@ -24,18 +25,13 @@ class BooksApp extends Component {
     loading: false
   };
 
-
-  getMyBooks = () => {
-
-  };
-
   componentDidMount() {
-    this.setState(currState => ({ loading: true }));
+    this.setState(() => ({ loading: true }));
     BooksAPI.getAll()
       .then(this.onGetBooksSuccess)
       .catch((err) => { console.log("ERROR IN BooksAPI.getAll(): ", err); })
       .then( () => { //Finally
-        this.setState(currState => ({ loading: false }));
+        this.setState(() => ({ loading: false }));
       })
     ;
   }
@@ -63,7 +59,7 @@ class BooksApp extends Component {
       });
     };
 
-    Notification.show(`Moved "${book.title}" to ${newShelf} shelf`);
+    notify(`Moved "${book.title}" to "${ShelfEnum.getLabel(newShelf)}" shelf`);
 
     this.setState((currState) => {
       persistShelfUpdate(currState);
@@ -95,13 +91,13 @@ class BooksApp extends Component {
     const { myBooks, loading } = this.state;
     return (
       <div>
-        <Notification.Container />
+        <NotificationContainer />
         <Route exact path={'/'} render={() => (
           <MyLibrary books={myBooks} onShelfChange={this.onShelfChange} loading={loading} />
         )}
         />
         <Route path={'/search'} render={() => (
-          <Search myBooks={myBooks} onShelfChange={this.onShelfChange} />
+          <Search myBooks={myBooks} onShelfChange={this.onShelfChange}  />
         )}
         />
       </div>

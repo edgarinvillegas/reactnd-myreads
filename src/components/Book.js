@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import './Book.css';
+import ShelfEnum from "../model/ShelfEnum";
 
 class Book extends Component {
   bookEl = null; //Reference only for animation
@@ -21,7 +22,7 @@ class Book extends Component {
 
   render() {
     const {book, onShelfChange} = this.props;
-    const { title, authors = [], thumbnailUrl = '', shelf = 'none' } = book;
+    const { title, authors = [], thumbnailUrl = '', shelf = ShelfEnum.NONE } = book;
     const backgroundImage = `url(${encodeURI(thumbnailUrl)})`;
     const handleShelfSelect = (event) => {
       const newShelf = event.target.value;
@@ -34,11 +35,11 @@ class Book extends Component {
           <div className="book-cover" style={{width: 128, height: 193, backgroundImage: backgroundImage}}/>
           <div className="book-shelf-changer">
             <select value={shelf} onChange={handleShelfSelect}>
-              <option value="none" disabled>Move to...</option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              <option value={ShelfEnum.NONE} disabled>Move to...</option>
+              <option value={ShelfEnum.CURRENTLY_READING}>Currently Reading</option>
+              <option value={ShelfEnum.WANT_TO_READ}>Want to Read</option>
+              <option value={ShelfEnum.READ}>Read</option>
+              <option value={ShelfEnum.NONE}>None</option>
             </select>
           </div>
         </div>

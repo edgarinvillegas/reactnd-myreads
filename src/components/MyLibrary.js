@@ -8,6 +8,7 @@ import BookList from './BookList';
 import Book from './Book'; //Importing this just for its propTypes
 import './MyLibrary.css';
 import {Link} from "react-router-dom";
+import ShelfEnum from "../model/ShelfEnum";
 
 
 const MyLibrary = ({ books, onShelfChange, loading = false }) => {
@@ -25,23 +26,23 @@ const MyLibrary = ({ books, onShelfChange, loading = false }) => {
       <div className="list-books-content">
         <div>
           <BookList
-            key={'currentlyReading'}
+            key={ShelfEnum.CURRENTLY_READING}
             books={currentlyReadingBooks}
-            shelfTitle={'Currently Reading'}
+            shelfTitle={ShelfEnum.getLabel(ShelfEnum.CURRENTLY_READING)}
             onShelfChange={onShelfChange}
             noBooksText={noBooksText}
           />
           <BookList
-            key={'wantToRead'}
+            key={ShelfEnum.WANT_TO_READ}
             books={wantToReadBooks}
-            shelfTitle={'Want to read'}
+            shelfTitle={ShelfEnum.getLabel(ShelfEnum.WANT_TO_READ)}
             onShelfChange={onShelfChange}
             noBooksText={noBooksText}
           />
           <BookList
-            key={'read'}
+            key={ShelfEnum.READ}
             books={readBooks}
-            shelfTitle={'Read'}
+            shelfTitle={ShelfEnum.getLabel(ShelfEnum.READ)}
             onShelfChange={onShelfChange}
             noBooksText={noBooksText}
           />

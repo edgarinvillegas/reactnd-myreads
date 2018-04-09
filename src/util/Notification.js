@@ -16,7 +16,7 @@ import { ToastContainer, toast, style } from 'react-toastify';
  * It needs a Notification.Container component to exist in the component tree
  * @param {string} text
  */
-const show = (text) => {
+const notify = (text) => {
   //Styling for the toast
   style({
     colorProgressDefault: ""
@@ -26,4 +26,4 @@ const show = (text) => {
   });
 };
 
-export { show, ToastContainer as Container };
+export { notify, ToastContainer as NotificationContainer };

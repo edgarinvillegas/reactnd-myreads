@@ -34,6 +34,7 @@
   //From Book instance
   const bookClone = new Book(book);
  */
+import ShelfEnum from './ShelfEnum';
 
 class Book {
   id = '';
@@ -74,7 +75,7 @@ class Book {
       title: apiBook.title,
       authors: apiBook.authors,
       thumbnailUrl: apiBook.imageLinks ? apiBook.imageLinks.smallThumbnail : '',
-      shelf: apiBook.shelf || 'none'
+      shelf: apiBook.shelf || ShelfEnum.NONE
     });
   }
 

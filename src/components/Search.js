@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
 import debounce from 'lodash.debounce';
 
 import './Search.css';
@@ -10,7 +11,7 @@ import BookList from "./BookList";
 import BookModel from '../model/Book';
 import * as BooksAPI from '../BooksAPI';
 import Book from "./Book";
-import PropTypes from "prop-types";
+import { notify } from '../util/Notification';
 
 
 class Search extends Component {
@@ -72,7 +73,7 @@ class Search extends Component {
         this.onSearchSuccess(apiFilteredBooks);
       })
       .catch( err => {
-        console.log(`Error ${err.toString()}`); //TODO: show as toast
+        notify(`Error ${err.toString()}`);
       })
       .then(() => { //finally
         this.setState(currState => ({ pendingSearchCalls: currState.pendingSearchCalls - 1 }));
