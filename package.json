@@ -4,9 +4,11 @@
     "prop-types": "^15.6.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-fader": "^2.0.3",
     "react-router-dom": "^4.2.2",
-    "react-transition-group": "^2.3.0",
-    "react-toastify": "^3.4.3"
+    "react-router-transition-switch": "^1.1.0",
+    "react-toastify": "^3.4.3",
+    "react-transition-group": "^2.3.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

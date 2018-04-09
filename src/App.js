@@ -4,6 +4,8 @@
  */
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import TransitionSwitch from 'react-router-transition-switch';
+import Fader from 'react-fader';
 
 import * as BooksAPI from './BooksAPI';
 import BookModel from './model/Book';
@@ -61,10 +63,11 @@ class BooksApp extends Component {
 
     notify(`Moved "${book.title}" to "${Shelf.getLabel(newShelf)}" shelf`);
 
-    this.setState((currState) => {
-      persistShelfUpdate(currState);
+    let previousState;
+    this.setState(currState => {
+      previousState = currState;
       return this.getStateForShelfChange(book, newShelf, currState);
-    });
+    }, () => persistShelfUpdate(previousState));
   };
 
   /**
@@ -92,14 +95,16 @@ class BooksApp extends Component {
     return (
       <div>
         <NotificationContainer />
-        <Route exact path={'/'} render={() => (
-          <MyLibrary books={myBooks} onShelfChange={this.onShelfChange} loading={loading} />
-        )}
-        />
-        <Route path={'/search'} render={() => (
-          <Search myBooks={myBooks} onShelfChange={this.onShelfChange}  />
-        )}
-        />
+        <TransitionSwitch component={Fader}>
+          <Route exact path={'/'} render={() => (
+            <MyLibrary books={myBooks} onShelfChange={this.onShelfChange} loading={loading} />
+          )}
+          />
+          <Route path={'/search'} render={() => (
+            <Search myBooks={myBooks} onShelfChange={this.onShelfChange}  />
+          )}
+          />
+        </TransitionSwitch>
       </div>
     );
   }

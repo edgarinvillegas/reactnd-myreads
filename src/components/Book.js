@@ -8,13 +8,12 @@ class Book extends Component {
   bookEl = null; //Reference only for animation
 
   componentDidUpdate() {
-    console.log(`componentDidUpdate ${this.props.book.title}`);
     const bookEl = this.bookEl;
     bookEl.classList.remove('fade-out-in');
-    setTimeout( () => bookEl && bookEl.classList.add('fade-out-in'), 100);
+    requestAnimationFrame(() => bookEl && bookEl.classList.add('fade-out-in'));
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const book = this.props.book;
     const newBook = nextProps.book;
     return !book.equals(newBook);

@@ -25,7 +25,7 @@ const BookList = ({ shelfTitle: title = null, books, onShelfChange, noBooksText 
                 timeout={500}
                 classNames="fade"
               >
-                <li>
+                <li key={book.id}>
                   <Book book={book} onShelfChange={onShelfChange}/>
                 </li>
               </CSSTransition>
