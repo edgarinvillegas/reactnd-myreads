@@ -54,20 +54,20 @@ class BooksApp extends Component {
   onShelfChange = (book, newShelf) => {
     //Makes the ajax call. If there was an error, rollbacks to previous state.
     //TODO: Consider several simultaneous failures (Reviewer, should I?)
-    const persistShelfUpdate = (previousState) => {
+    const persistShelfUpdate = (previousBooks) => {
       BooksAPI.update(book, newShelf).catch(() => {
-        this.setState(previousState);
+        this.setState({ myBooks: previousBooks});
         notify(`Could not move "${book.title}" to "${Shelf.getLabel(newShelf)}" shelf`);
       });
     };
 
     notify(`Moved "${book.title}" to "${Shelf.getLabel(newShelf)}" shelf`);
 
-    let previousState;
+    let previousBooks;
     this.setState(currState => {
-      previousState = currState;
+      previousBooks = currState.myBooks;
       return this.getStateForShelfChange(book, newShelf, currState);
-    }, () => persistShelfUpdate(previousState));
+    }, () => persistShelfUpdate(previousBooks));
   };
 
   /**

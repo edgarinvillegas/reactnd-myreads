@@ -48,7 +48,7 @@ class Book {
    * @param {Object} book Can be a Book-like object OR an object literal in the format returned by BooksApi
    */
   constructor(book) {
-    if (book.publisher) { //This helps distinguish an api-book from a Book one.
+    if (book.industryIdentifiers) { //This helps distinguish an api-book from a Book one.
       this._constructFromApiBook(book);
     } else {
       this._constructFromBookLike(book);
