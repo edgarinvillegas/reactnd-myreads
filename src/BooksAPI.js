@@ -1,5 +1,5 @@
 
-const api = "https://reactnd-books-api.udacity.com"
+const api = "https://reactnd-books-api.uc.com"; // TODO: update
 
 
 // Generate a unique token for storing your bookshelf data on the backend server.
@@ -24,7 +24,7 @@ export const getAll = () =>
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
